@@ -45,7 +45,7 @@ const PhotoItem = ({ photo, onDelete, show, onOpen }) => {
             <Typography variant="h6">Creater:</Typography>
             <Typography variant="subtitle1">
               <Link to={"/gallery/" + photo.user._id}>
-                {photo.user.email || photo.user.displayName}
+                {photo.user?.email || photo.user?.displayName}
               </Link>
             </Typography>
           </Grid>
@@ -63,7 +63,7 @@ const PhotoItem = ({ photo, onDelete, show, onOpen }) => {
         </Grid>
       </Grid>
 
-      {show && user._id === photo.user._id && (
+      {show && user?._id === photo.user._id && (
         <ButtonsForAdmin onDelete={onDelete} />
       )}
     </Grid>

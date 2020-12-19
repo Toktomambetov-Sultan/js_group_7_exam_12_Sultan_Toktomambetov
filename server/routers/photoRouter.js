@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs").promises;
 
 const uploadImage = require("../tools/routers/uploadImg");
 const authorizationMiddleware = require("../tools/routers/authorizationMiddleware");
@@ -15,8 +16,15 @@ router.get("/", async (req, res) => {
           }
         : {}
     );
-    res.send(photos);
+    let user = null;
+    if (req.query.id) {
+      user = await schema.User.findById(req.query.id);
+      user = user.toJSON();
+      delete user.token;
+    }
+    res.send({ photos, user });
   } catch (error) {
+    console.log(error);
     res.status(400).send({
       message: "Wrong request.",
     });
@@ -49,7 +57,9 @@ router.post(
 
 router.delete("/", [authorizationMiddleware(true)], async (req, res) => {
   try {
-    if (req.body.id !== req.user._id)
+    console.log("I am here");
+    const photo = await schema.Photo.findById(req.body.id);
+    if (photo.user !== req.user._id)
       return res.status(400).send({
         error: "access is denied",
       });

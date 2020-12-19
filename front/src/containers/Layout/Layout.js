@@ -11,6 +11,7 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
+import { push } from "connected-react-router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
@@ -41,6 +42,9 @@ const Layout = ({ children }) => {
   const logOutHandler = () => {
     dispatch(logOut());
   };
+  const changePath = (path) => {
+    dispatch(push(path));
+  };
   return (
     <div>
       <Backdrop className={classes.backdrop} open={false}>
@@ -68,16 +72,22 @@ const Layout = ({ children }) => {
                     </Grid>
                   </NavLink>
                 )}
-                {user?.token && (
-                  <>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      onClick={logOutHandler}
-                    >
-                      Log out
-                    </Button>
-                  </>
+                {user?.token ? (
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={logOutHandler}
+                  >
+                    Log out
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => changePath("/")}
+                  >
+                    Get in
+                  </Button>
                 )}
               </Grid>
             </Grid>

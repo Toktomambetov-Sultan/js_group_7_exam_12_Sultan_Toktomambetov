@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Layout from "./containers/Layout/Layout";
 import HomePage from "./containers/HomePage/HomePage";
 import GalleryPage from "./containers/GalleryPage/GalleryPage";
+import AddPhotoPage from "./containers/AddPhotoPage/AddPhotoPage";
 
 const CustomRoute = (props) => {
   const user = useSelector((state) => state.user.user);
@@ -20,7 +21,8 @@ const App = () => {
         <Route path="/" exact component={HomePage} />
         <Route path="/gallery/" exact component={GalleryPage} />
         <Route path="/gallery/:id" exact component={GalleryPage} />
-        
+        <Route path="/add-photo" exact component={AddPhotoPage} />
+
         <Redirect to="/" />
       </Switch>
     </Layout>

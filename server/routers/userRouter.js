@@ -7,15 +7,6 @@ const config = require("../config");
 
 const client = new OAuth2Client(config.GoogleClientId);
 
-router.get("/", async (req, res) => {
-  try {
-    const users = await schema.User.find(req.query);
-    res.send(users);
-  } catch (error) {
-    res.send(error);
-  }
-});
-
 router.post("/", async (req, res) => {
   try {
     delete req.body.role;
