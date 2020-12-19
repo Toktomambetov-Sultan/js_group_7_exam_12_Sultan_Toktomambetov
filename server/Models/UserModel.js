@@ -13,7 +13,7 @@ const UserModel = new Schema({
   email: {
     type: String,
     unique: true,
-    validate: uniqueValidate("User", "username"),
+    validate: uniqueValidate("User", "email"),
   },
   avatarImage: {
     type: String,

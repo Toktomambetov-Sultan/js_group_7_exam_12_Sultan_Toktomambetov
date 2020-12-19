@@ -2,7 +2,6 @@ const express = require("express");
 const schema = require("./../Models");
 const router = express.Router();
 const authorizationMiddleware = require("./../tools/routers/authorizationMiddleware");
-const { default: Axios } = require("axios");
 const { OAuth2Client } = require("google-auth-library");
 const config = require("../config");
 
@@ -22,10 +21,8 @@ router.post("/", async (req, res) => {
     delete req.body.role;
     if (!req.body.username)
       return res.status(400).send({
-        error: {
-          errors: {
-            username: { message: "field 'username' is required." },
-          },
+        errors: {
+          username: { message: "field 'username' is required." },
         },
       });
     const user = new schema.User(req.body);
@@ -33,6 +30,7 @@ router.post("/", async (req, res) => {
     await user.save();
     res.send(user);
   } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
 });
@@ -40,14 +38,7 @@ router.post("/", async (req, res) => {
 router.post("/sessions", async (req, res) => {
   try {
     const user = await schema.User.findOne({
-      $or: [
-        {
-          username: req.body.username,
-        },
-        {
-          email: req.body.email,
-        },
-      ],
+      username: req.body.username,
     });
     if (!user)
       return res.status(400).send({
@@ -71,7 +62,7 @@ router.post("/sessions", async (req, res) => {
   }
 });
 
-router.post("/log_out", authorizationMiddleware, async (req, res) => {
+router.post("/log_out", authorizationMiddleware(true), async (req, res) => {
   try {
     req.user.generateToken();
     await req.user.save({ validateBeforeSave: false });
@@ -94,10 +85,11 @@ router.post("/getInByGoogle", async (req, res) => {
     });
     const payload = response.getPayload();
     let user = await schema.User.findOne({
-      username: payload.email,
+      email: payload.email,
     });
     if (!user) {
       user = new schema.User({
+        username: payload.sub,
         email: payload.email,
         displayName: payload.name,
         avatarImage: payload.picture,
