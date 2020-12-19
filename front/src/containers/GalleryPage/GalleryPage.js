@@ -56,7 +56,7 @@ const GalleryPage = (props) => {
               : "all"}
           </Typography>
         </div>
-        {user?._id === props.match.params.id && (
+        {user?.token && user?._id === props.match.params.id && (
           <Button onClick={() => onAdd()} variant="outlined" color="secondary">
             add photo
           </Button>
@@ -69,7 +69,7 @@ const GalleryPage = (props) => {
             photo={photo}
             onOpen={() => onOpen(photo.image)}
             show={!!props.match.params.id}
-            onDelete={onDelete}
+            onDelete={() => onDelete(photo._id)}
           />
         ))}
       </Grid>

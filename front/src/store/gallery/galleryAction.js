@@ -70,12 +70,15 @@ export const deletePhoto = (id) => {
       const headers = {
         Authorization: getState().user.user?.token,
       };
-      await axiosOrder.delete("/photos/", { data: { id }, headers });
+      await axiosOrder.delete("/photos", {
+        data: { id },
+        headers,
+      });
 
       dispatch(push("/gallery"));
       dispatch(fetchSuccess());
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       dispatch(fetchError(error));
     }
   };

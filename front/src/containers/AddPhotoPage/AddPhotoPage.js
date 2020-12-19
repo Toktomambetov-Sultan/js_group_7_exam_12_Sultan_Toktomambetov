@@ -21,15 +21,14 @@ const AddPhotoPage = () => {
         value = event.target.value;
     }
     setCurrentPhoto((prevState) => ({
-      [name]: value,
       ...prevState,
+      [name]: value,
     }));
   };
   const onFormSubmit = (event) => {
     event.preventDefault();
     dispatch(postPhoto(currentPhoto));
   };
-  console.log(state.error);
   return (
     <div>
       <PhotoForm

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const PhotoForm = ({ onSubmit, onChange, error, photo }) => {
   const classes = useStyles();
-  console.log(photo);
+  
   return (
     <Container component="main" maxWidth="md">
       <Box

@@ -57,14 +57,13 @@ router.post(
 
 router.delete("/", [authorizationMiddleware(true)], async (req, res) => {
   try {
-    console.log("I am here");
     const photo = await schema.Photo.findById(req.body.id);
-    if (photo.user !== req.user._id)
+
+    if (String(req.user._id) !== String(photo.user))
       return res.status(400).send({
         error: "access is denied",
       });
-
-    await schema.Photo.findByIdAndDelete(req.body.id);
+    await schema.Photo.findByIdAndDelete(photo._id);
     res.send({ message: "successfully deleted" });
   } catch (error) {
     console.log(error);
