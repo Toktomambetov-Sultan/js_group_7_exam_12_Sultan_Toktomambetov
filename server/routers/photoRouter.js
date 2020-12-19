@@ -8,7 +8,7 @@ const schema = require("../Models");
 
 router.get("/", async (req, res) => {
   try {
-    const photos = await schema.Photo.find(req.body);
+    const photos = await schema.Photo.find(req.query);
     res.send(photos);
   } catch (error) {
     console.log(error);
