@@ -21,11 +21,11 @@ const setPhotos = (data) => {
   return { type: SET_PHOTOS, data };
 };
 
-const getPhotos = () => {
+export const getPhotos = () => {
   return async (dispatch) => {
     dispatch(fetchRequest());
     try {
-      const response = axiosOrder.get("/photos");
+      const response = await axiosOrder.get("/photos");
       dispatch(setPhotos(response.data));
       dispatch(fetchSuccess());
     } catch (error) {

@@ -27,7 +27,6 @@ const RegistrationPage = () => {
       password: "",
     }));
   };
-  console.log(state.registrationError?.errors);
   return (
     <UserForm
       title="Sing up"

@@ -8,10 +8,15 @@ const schema = require("../Models");
 
 router.get("/", async (req, res) => {
   try {
-    const photos = await schema.Photo.find(req.query);
+    const photos = await schema.Photo.find(
+      req.query.id
+        ? {
+            user: req.query.id,
+          }
+        : {}
+    );
     res.send(photos);
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       message: "Wrong request.",
     });

@@ -32,12 +32,23 @@ db.once("open", async () => {
   } catch (e) {
     console.log("Collections were not present, skipping drop...");
   }
-  await schema.User.create({
+  const user = await schema.User.create({
     username: "sultan",
     password: "H1h2h3h4",
     displayName: "Sultan Toktomambetov",
     token: nanoid(),
   });
-
+  await schema.Photo.create(
+    {
+      user: user._id,
+      title: "day off",
+      image: "1.jpeg",
+    },
+    {
+      user: user._id,
+      title: "day off",
+      image: "2.jpeg",
+    }
+  );
   db.close();
 });
