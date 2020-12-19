@@ -21,7 +21,7 @@ const App = () => {
         <Route path="/" exact component={HomePage} />
         <Route path="/gallery/" exact component={GalleryPage} />
         <Route path="/gallery/:id" exact component={GalleryPage} />
-        <Route path="/add-photo" exact component={AddPhotoPage} />
+        <CustomRoute path="/add-photo" exact component={AddPhotoPage} />
 
         <Redirect to="/" />
       </Switch>

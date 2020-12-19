@@ -38,6 +38,7 @@ const Layout = ({ children }) => {
   const classes = useStyles();
 
   const user = useSelector((state) => state.user.user);
+  const state = useSelector((state) => state.gallery);
   const dispatch = useDispatch();
   const logOutHandler = () => {
     dispatch(logOut());
@@ -47,7 +48,7 @@ const Layout = ({ children }) => {
   };
   return (
     <div>
-      <Backdrop className={classes.backdrop} open={false}>
+      <Backdrop className={classes.backdrop} open={state.isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <AppBar component={Box} position="static" pb={2}>
