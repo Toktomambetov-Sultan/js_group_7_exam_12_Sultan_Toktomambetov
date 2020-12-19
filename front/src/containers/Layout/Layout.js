@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { logOut } from "../../store/user/userActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme) => ({
   },
   displayName: {
     margin: "5px",
+  },
+  navLink: {
+    color: "#fff",
+    textDecoration: "none",
+    "&.active": {
+      color: "lightgreen",
+    },
   },
 }));
 
@@ -44,16 +51,22 @@ const Layout = ({ children }) => {
           <Container>
             <Grid container direction="column">
               <Grid item container justify="space-between" alignItems="center">
-                <Typography variant="h4">Gallery</Typography>
+                <NavLink to="/gallery" exact className={classes.navLink}>
+                  <Typography variant="h4">Gallery</Typography>
+                </NavLink>
                 {user?.token && (
-                  <Link to="/">
+                  <NavLink
+                    to={"/gallery/" + user?._id}
+                    exact
+                    className={classes.navLink}
+                  >
                     <Grid container alignItems="center" direction="row">
                       <Avatar alt="person image" src={user?.avatarImage} />
                       <Typography className={classes.displayName} variant="h6">
                         {user?.displayName}
                       </Typography>
                     </Grid>
-                  </Link>
+                  </NavLink>
                 )}
                 {user?.token && (
                   <>
